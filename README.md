@@ -64,6 +64,7 @@ mysql_secure_installation
 **Mono version. 6.12:**
  This is the system and libraries that OpenSim uses to run. 
 
+```
 rpmkeys --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
 
 yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
@@ -71,6 +72,7 @@ su -c 'curl https://download.mono-project.com/repo/centos7-stable.repo | tee /et
 yum clean all
 yum makecache
 yum install -y mono-complete
+```
 
 **SystemD:**
  Will use systemd to setup screen and automate starting and stopping
@@ -127,6 +129,7 @@ This user-friendly web interface will access the remote XML RPC port to change
 Original code: This only works with php 5.x I will upload my version that works with 7.x
 but making sure  the ways it gets to the configuration files works cleanly, I had to patch 
 the default directory, see if I do not need to do this. 
+
 https://github.com/Nino85Whitman/OpenSim-Manager-Web-V5
 
 
@@ -136,4 +139,5 @@ The base CMS will create a basic layout for working with the opensim interface.
 **Wordpress plugin:**
 w4os – OpenSimulator Web Interface :
 This will create an interface for users to create profiles and avatars 
+
 https://wordpress.org/plugins/w4os-opensimulator-web-interface/
