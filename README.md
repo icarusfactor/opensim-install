@@ -80,7 +80,7 @@ yum install -y mono-complete
 ```
 cd /etc/systemd/system/
 
-[root@host dyount]# cat ./opensim.service
+[root@host dyount]# vim ./opensim.service
 # Systemd Service Unit for OpenSimulator 
 #
 [Unit]
