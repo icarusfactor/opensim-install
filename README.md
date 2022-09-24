@@ -153,3 +153,6 @@ w4os – OpenSimulator Web Interface :
 This will create an interface for users to create profiles and avatars 
 
 https://wordpress.org/plugins/w4os-opensimulator-web-interface/
+
+
+  ... MORE TO COME LATER 
