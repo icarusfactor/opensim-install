@@ -5,6 +5,7 @@ Steps to setup a full opensim system.
  Setup SSH keys for login and quick access to *screen to control
 administration actions not done by web interface. 
 If you wish to have a key setup follow the below instructions. 
+
 https://www.ssh.com/academy/ssh/keygen
 
 **Screen:**
@@ -13,10 +14,13 @@ so screen will need to be used, tmux is standard in newer OS’s but does not ha
 screen sharing.  
 
 **HOWTO INSTALL SCREEN:**
+
+```
 yum update -y
 yum install screen -y
 screen -v
 Screen version 4.01.00devel (GNU) 2-May-06
+```
 
 **Apache 2.4  :**
  A standard Apache install will work for what we want. Nothing special
@@ -26,19 +30,23 @@ We will also use a custom interface for managing the opensim configuration
 files. 
 
 **HOWTO INSTALL APACHE:**
+
+```
 yum update -y
 yum install httpd
 systemctl start httpd
 systemctl enable httpd.service
+```
 
 
 **PHP version 7.4 :** 
  This is the stable version and will be used for Wordpress and OSWebManager
 to help manage and use Opensim. The only non-default module needed is mysql
 
+```
 yum install php php-mysql
 systemctl restart httpd.service
-
+```
 
 
 **Mysql 10.3 :**
@@ -46,6 +54,7 @@ systemctl restart httpd.service
  No special setups need to be made so a basic install will work. 
 
 **HOWTO INSTALL MYSQL:**
+```
 rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 yum install MariaDB-server galera MariaDB-client MariaDB-shared MariaDB-backup MariaDB-common
 systemctl enable mariadb
@@ -60,6 +69,7 @@ mysql_secure_installation
  Disallow root login remotely? [Y/n] Y
  Remove test database and access to it? [Y/n] Y
  Reload privilege tables now? [Y/n] Y
+```
 
 **Mono version. 6.12:**
  This is the system and libraries that OpenSim uses to run. 
@@ -117,10 +127,12 @@ http://opensimulator.org/wiki/Download
 http://opensimulator.org/dist/opensim-0.9.2.1.tar.gz
 
 Change directory to opensim user directory example in my case /home/dyount/opensim.spotcheckit.org/
+```
 mkdir opensim
 cd opensim 
 tar -zxvf opensim-0.9.2.1.tar.gz
 The binaries and startup files are located in the /bin directory. 
+```
 
 **OSWM:**
 This user-friendly web interface will access the remote XML RPC port to change
