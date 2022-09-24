@@ -1,5 +1,5 @@
 # opensim-install
-Steps to setup a full opensim system.
+Steps to setup a full opensim system. NOTE: Server Operating system is CentOS7.9 
 
 **SSH :**
  Setup SSH keys for login and quick access to *screen to control
