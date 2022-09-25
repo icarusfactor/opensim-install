@@ -269,7 +269,7 @@ Enabling the file Standalone.ini also enables the below file.
 BASEPATH/opensim/bin/config-include/StandaloneCommon.ini
 ```
 
-Comment out the below line to disable SQLite as we will be using mysql instead.
+Changes made to [DatabaseService] section. Comment out the below line to disable SQLite as we will be using mysql instead.
 ```
  ;Include-Storage = "config-include/storage/SQLiteStandalone.ini";
 ```
@@ -278,14 +278,22 @@ Uncomment the below lines and setup the database credtials for opensim.
 ```
  StorageProvider = "OpenSim.Data.MySQL.dll"
  ConnectionString = "Data Source=localhost;Database=dyount_opensim;User ID=dyount_opensim;Password=PaSsW0Rd;Old Guids=true;SslMode=None;"
- ```
+```
  
-Comment out the NULL storage and uncomment the mysql source. Give the grid a name and nick name.  
+Changes made to [GridService] section. Comment out the NULL storage and uncomment the mysql source.   
 ```
 ;StorageProvider = "OpenSim.Data.Null.dll:NullRegionData"
 Uncomment or add:
 StorageProvider = "OpenSim.Data.MySQL.dll:MySqlRegionData"
+```
+
+Changes made in [GridInfoService] section. Give the grid a name and nick name.
+```
 gridname = "spotcheckit.org"
 gridnick = "spottygrid"
 ```
+
+
+Now we have setup the base opensim system we need to make sure the SystemD file is in place to start the server side program.   
+
   ... MORE TO COME LATER 
