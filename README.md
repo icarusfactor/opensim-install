@@ -322,6 +322,6 @@ Resolve hostname to IP on start (for running inside Docker) [False]:
 External host name [SYSTEMIP]: 69.167.171.208
 ```
 
-After enter the IP address it should finish starting up the service and filling the database that was created for this service. Next we will create the first user and will be the admin user.
+After enter the IP address it should finish starting up the service and filling the database that was created for this service. Next we will create the first user and will be the admin user.To exit back out to the main console press CTRL+SHIFT+A.
 
   ... MORE TO COME LATER 
