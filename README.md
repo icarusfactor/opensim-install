@@ -173,8 +173,6 @@ to the opensim directory and then into the bin directory.
  This is the default setting so no change is needed , just to make aware of
 how it connected to the rest of the system.
 
-This is the default setting so no change is needed, just to make aware of
-how it connected to the rest of the system.
 ```
 BASEPATH/opensim/bin/OpenSim.ini
 Include-Architecture = "config-include/Standalone.ini"
