@@ -170,11 +170,71 @@ to the opensim directory and then into the bin directory.
 
 **Files that need to be changed from default settings:**
 
- This is the default setting so no change is needed , just to make aware of
-how it connected to the rest of the system.
-
+The inital configuration file. 
 ```
 BASEPATH/opensim/bin/OpenSim.ini
+```
+
+Change then name of the constant host name prompt display, I used the IP address.
+Enable saving the history of the console file and how many lines of it and if it was timestampped. I disabled crashes , dont need to enable this until problems start occuring and need to debug the issue and I have enabled the PID file for the main binary. No limit set by default, but always good to set a small and large prime size limit to limit any crashes from excessively large prims or prims you can not find in your map. Also allow prims to be bound by the physics engine or not.  
+
+Changes in the [Const] section.
+```
+BaseHostname = "69.167.171.208"
+```
+
+Changes in the [Startup] section.
+```
+ConsolePrompt = "Region (\R) "
+ConsoleHistoryFileEnabled = true
+ConsoleHistoryFileLines = 100
+ConsoleHistoryTimeStamp = true
+save_crashes = false
+PIDFile = "/tmp/OpenSim.exe.pid"
+PhysicalPrimMin = 0.01
+PhysicalPrimMax = 64
+physical_prim = true
+```
+
+Personal settings for the Estate creditials and the UUID if left as zeroed will be randonly generated. 
+
+Changes in the [Estates] section. 
+```
+DefaultEstateName = My Estate
+DefaultEstateOwnerName = FirstName LastName
+DefaultEstateOwnerUUID = 00000000-0000-0000-0000-000000000000
+DefaultEstateOwnerEMail = factor@userspace.org
+DefaultEstateOwnerPassword = password
+```
+
+Changes in the [Messaging] section. While this is optional it will enable Offline messaging service and uses mysql for storage.  
+```
+  OfflineMessageModule = "Offline Message Module V2"
+  StorageProvider = OpenSim.Data.MySQL.dll
+  MuteListModule = MuteListModule
+  ForwardOfflineGroupMessages = true
+```
+
+Changes in the [RemoteAdmin] section. This will be needed for our custom web interface to manage the grids configuration files from it and even restart the service.  
+```
+ enabled = true
+ port = 0
+ access_password = "pAs$w0Rd"
+```
+
+Changes in the [Groups] section. This is part of and used by the messaging service. 
+```
+Enabled = true
+LevelGroupCreate = 0
+HomeURI = "http://69.167.171.208:9000"
+MessagingEnabled = true
+MessagingModule = "Groups Messaging Module V2"
+DebugEnabled = false
+```
+
+This is the default setting so no change is needed , just to make aware of
+how it connected to the rest of the system.
+```
 Include-Architecture = "config-include/Standalone.ini"
 ```
 
@@ -184,32 +244,48 @@ BASEPATH/opensim/bin/config-include/Standalone.ini
 StorageProvider = "OpenSim.Data.MySQL.dll"
 ```
 
-Not changed but default ,to show its connection to the next.
+Not changed but default ,to show its connection to the next. This is the end of the file.
 ```
-Include-Common = "config-include/StandaloneCommon.ini"
+Include-Common = "config-include/Standalone.ini"
 ```
 
+
+
 The changes here will reflect the switch from default SQLite to mysql.
+By selecting Standalone.ini it will also need StandaloneCommon.ini
+says do not hcange any option in Standalone.ini but I ended up chaning the null to mysql since we were using mysql.
+```
+BASEPATH/opensim/bin/config-include/Standalone.ini
+```
+
+Comment out the below line to disable SQLite as storage and add the mysql one.
+```
+;StorageProvider = "OpenSim.Data.Null.dll"
+StorageProvider = "OpenSim.Data.MySQL.dll"
+```
+
+Enabling the file Standalone.ini also enables the below file. 
 ```
 BASEPATH/opensim/bin/config-include/StandaloneCommon.ini
 ```
 
-Comment out the below line to disable SQLite as storage. 
+Comment out the below line to disable SQLite as we will be using mysql instead.
 ```
-;Include-Storage = "config-include/storage/SQLiteStandalone.ini";
+ ;Include-Storage = "config-include/storage/SQLiteStandalone.ini";
 ```
 
-Uncomment the below lines and setup the database for opensim. 
+Uncomment the below lines and setup the database credtials for opensim. 
 ```
  StorageProvider = "OpenSim.Data.MySQL.dll"
  ConnectionString = "Data Source=localhost;Database=dyount_opensim;User ID=dyount_opensim;Password=PaSsW0Rd;Old Guids=true;SslMode=None;"
-Comment:  
- ;StorageProvider = "OpenSim.Data.Null.dll:NullRegionData"
+ ```
+ 
+Comment out the NULL storage and uncomment the mysql source. Give the grid a name and nick name.  
+```
+;StorageProvider = "OpenSim.Data.Null.dll:NullRegionData"
 Uncomment or add:
- StorageProvider = "OpenSim.Data.MySQL.dll:MySqlRegionData"
-Give name to grid. 
- gridname = "spotcheckit.org"
-Give nick to grid. 
- gridnick = "spottygrid"
+StorageProvider = "OpenSim.Data.MySQL.dll:MySqlRegionData"
+gridname = "spotcheckit.org"
+gridnick = "spottygrid"
 ```
   ... MORE TO COME LATER 
