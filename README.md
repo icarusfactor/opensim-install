@@ -164,8 +164,9 @@ we will setup the opensim binary to get the base system up and running.
 
 Change directory to the Apache users DOCROOT to start from, but not install
 Wordpress yet, in here we will untar the file as the user as follows
-"tar -zxvf opensim-0.9.2.1.tar.gz".Now change directory to the opensim directory
-and then into the bin directory.  
+"tar -zxvf opensim-0.9.2.1.tar.gz". We will also change the name to its simpler
+form without version. "mv opensim-0.9.2.1.tar.gz ./opensim". Now change directory
+to the opensim directory and then into the bin directory.  
 
 **Files that need to be changed from default settings:**
 
@@ -214,4 +215,3 @@ Give nick to grid.
  gridnick = "spottygrid"
 ```
   ... MORE TO COME LATER 
-
