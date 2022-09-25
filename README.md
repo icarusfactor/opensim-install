@@ -157,5 +157,64 @@ This is the client side program that users run to control their avatars. Others 
 http://sldev.free.fr/
 http://sldev.free.fr/binaries/CoolVLViewer-1.30.0.18-Linux-x86_64-Setup
 
+**LETS BEGIN THE SETUP**
+
+Now the we have all of the basic programs needed for the our system setup, first
+we will setup the opensim binary to get the base system up and running.
+
+Change directory to the Apache users DOCROOT to start from, but not install
+Wordpress yet, in here we will untar the file as the user as follows
+"tar -zxvf opensim-0.9.2.1.tar.gz".Now change directory to the opensim directory
+and then into the bin directory.  
+
+**Files that need to be changed from default settings:**
+
+ This is the default setting so no change is needed , just to make aware of
+how it connected to the rest of the system.
+
+This is the default setting so no change is needed, just to make aware of
+how it connected to the rest of the system.
+```
+BASEPATH/opensim/bin/OpenSim.ini
+Include-Architecture = "config-include/Standalone.ini"
+```
+
+We will be using the mysql database instead of the default sqlite. So these change will need to be made. 
+```
+BASEPATH/opensim/bin/config-include/Standalone.ini
+StorageProvider = "OpenSim.Data.MySQL.dll"
+```
+
+Not changed but default ,to show its connection to the next.
+```
+Include-Common = "config-include/StandaloneCommon.ini"
+```
+
+The changes here will reflect the switch from default SQLite to mysql.
+```
+BASEPATH/opensim/bin/config-include/StandaloneCommon.ini
+```
+
+Comment out the below line to disable SQLite as storage. 
+```
+;Include-Storage = "config-include/storage/SQLiteStandalone.ini";
+```
+
+Uncomment the below lines and setup the database for opensim. 
+```
+ StorageProvider = "OpenSim.Data.MySQL.dll"
+ ConnectionString = "Data Source=localhost;Database=dyount_opensim;User ID=dyount_opensim;Password=PaSsW0Rd;Old Guids=true;SslMode=None;"
+Comment:  
+ ;StorageProvider = "OpenSim.Data.Null.dll:NullRegionData"
+Uncomment or add:
+ StorageProvider = "OpenSim.Data.MySQL.dll:MySqlRegionData"
+Give name to grid. 
+ gridname = "spotcheckit.org"
+Give nick to grid. 
+ gridnick = "spottygrid"
+```
+  ... MORE TO COME LATER 
+
+
 
   ... MORE TO COME LATER 
