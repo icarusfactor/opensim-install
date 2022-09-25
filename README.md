@@ -215,6 +215,3 @@ Give nick to grid.
 ```
   ... MORE TO COME LATER 
 
-
-
-  ... MORE TO COME LATER 
