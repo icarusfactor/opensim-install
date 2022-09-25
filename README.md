@@ -176,7 +176,8 @@ BASEPATH/opensim/bin/OpenSim.ini
 ```
 
 Change then name of the constant host name prompt display, I used the IP address.
-Enable saving the history of the console file and how many lines of it and if it was timestampped. I disabled crashes , dont need to enable this until problems start occuring and need to debug the issue and I have enabled the PID file for the main binary. No limit set by default, but always good to set a small and large prime size limit to limit any crashes from excessively large prims or prims you can not find in your map. Also allow prims to be bound by the physics engine or not.  
+Enable saving the history of the console file and how many lines of it and if it was timestampped. I disabled crashes , dont need to enable this until problems start occuring and need to debug the issue and I have enabled the PID file for the main binary. No limit set by default, but always good to set a small and large prime size limit to limit any crashes from excessively large prims or prims you can not find in your map. Also allow 
+prims to be bound by the physics engine or not.  
 
 Changes in the [Const] section.
 ```
@@ -258,12 +259,6 @@ says do not hcange any option in Standalone.ini but I ended up chaning the null 
 BASEPATH/opensim/bin/config-include/Standalone.ini
 ```
 
-Comment out the below line to disable SQLite as storage and add the mysql one.
-```
-;StorageProvider = "OpenSim.Data.Null.dll"
-StorageProvider = "OpenSim.Data.MySQL.dll"
-```
-
 Enabling the file Standalone.ini also enables the below file. 
 ```
 BASEPATH/opensim/bin/config-include/StandaloneCommon.ini
@@ -295,6 +290,5 @@ gridnick = "spottygrid"
 
 
 Now that we have setup the base opensim system we need to make sure the SystemD file is in place to start the server side program and an empty database is setup that uses the credtials in the [DatabaseService] section of the configuration file. 
-
 
   ... MORE TO COME LATER 
