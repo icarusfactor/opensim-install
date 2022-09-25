@@ -291,4 +291,37 @@ gridnick = "spottygrid"
 
 Now that we have setup the base opensim system we need to make sure the SystemD file is in place to start the server side program and an empty database is setup that uses the credtials in the [DatabaseService] section of the configuration file. 
 
+Start the SystemD service and enter the inital database settings.
+```
+service opensim start
+screen -r Opensim_1
+```
+
+Attaching the opensim screen session for the first time you should see in the Console.
+```
+=====================================
+
+We are now going to ask a couple of questions about your region.
+
+You can press 'enter' without typing anything to use the default
+
+the default is displayed between [ ] brackets.
+
+=====================================
+
+New region name []: shutdown
+RegionUUID [c4508773-b09c-4e8a-98f2-41f560f504e8]: 
+```
+
+Press enter for the random UUID and then for region location and internal IP and internal port and to reoslve hostname.Then enter the IP address of the server. 
+```
+Region Location [1000,1000]:
+Internal IP address [0.0.0.0]:
+Internal port [9000]:
+Resolve hostname to IP on start (for running inside Docker) [False]:
+External host name [SYSTEMIP]: 69.167.171.208
+```
+
+After enter the IP address it should finish starting up the service and filling the database that was created for this service. Next we will create the first user and will be the admin user.
+
   ... MORE TO COME LATER 
