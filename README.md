@@ -110,8 +110,7 @@ WorkingDirectory=/home/dyount/opensim.spotcheckit.org/opensim/bin
 ExecStart=/bin/screen -S Opensim_1 -dm bash -c "ulimit -s 1048576;/bin/mono --desktop -O=all /home/dyount/opensim.spotcheckit.org/opensim/bin/OpenSim.exe;/bin/screen -S Opensim_1 -X multiuser on;/bin/screen -S Opensim_1 -X acladd dyount"
 ExecStop=/usr/bin/screen -d -r Opensim_1 -X stuff "shutdown" ; /usr/bin/screen -d -r Opensim_1 -X eval "stuff ^M"
 KillMode=none
-#ExecStart=/home/dyount/opensim.spotcheckit.org/opensim/bin/opensim.sh
-#ExecStop=/bin/screen -S Opensim_1 -X quit
+
  
 [Install]
 WantedBy=multi-user.target
