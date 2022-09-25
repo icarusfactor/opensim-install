@@ -294,6 +294,7 @@ gridnick = "spottygrid"
 ```
 
 
-Now we have setup the base opensim system we need to make sure the SystemD file is in place to start the server side program.   
+Now that we have setup the base opensim system we need to make sure the SystemD file is in place to start the server side program and an empty database is setup that uses the credtials in the [DatabaseService] section of the configuration file. 
+
 
   ... MORE TO COME LATER 
