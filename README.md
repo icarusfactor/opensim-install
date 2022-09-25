@@ -152,5 +152,10 @@ This will create an interface for users to create profiles and avatars
 
 https://wordpress.org/plugins/w4os-opensimulator-web-interface/
 
+**Cool VL Viewer**
+This is the client side program that users run to control their avatars. Others exist,this one works well for personal grids.
+http://sldev.free.fr/
+http://sldev.free.fr/binaries/CoolVLViewer-1.30.0.18-Linux-x86_64-Setup
+
 
   ... MORE TO COME LATER 
