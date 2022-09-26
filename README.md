@@ -239,10 +239,8 @@ how it connected to the rest of the system.
 Include-Architecture = "config-include/Standalone.ini"
 ```
 
-We will be using the mysql database instead of the default sqlite. So these change will need to be made. 
-```
+We will be using the mysql database instead of the default sqlite. No changes need to be made yet.
 BASEPATH/opensim/bin/config-include/Standalone.ini
-StorageProvider = "OpenSim.Data.MySQL.dll"
 ```
 
 Not changed but default ,to show its connection to the next. This is the end of the file.
