@@ -386,8 +386,19 @@ bash ./CoolVLViewer-1.30.0.13-Linux-x86_64-Setup
 cd CoolVLViewer
 ./cool_vl_viewer
 Once it starts up, click on the menu "Edit" option and then select "prefrences". 
-Make sure the tab "grids list" is highlighted. In the Login URI enter the IP address with port http://69.167.171.208:9000/ Then click "get paramaters". It may try to change the port to 8002 , change it back to 9000 or it wont work. Then if everything works you should see the grid name show up in the "Grid Name:"" section. Then click over into the list and select "Add New Grid" it should be in the list at this time and able to pick and log in a user to. Fill out the First name: and Last name: and password of the user. When you first log in you will get errors about no inventory and region data. Just click through these as
-it will create this data and you wont have to click through again. Now you have your avatar enabled and active to walk/fly around the region. 
+Make sure the tab "grids list" is highlighted. In the Login URI enter the IP
+address with port http://69.167.171.208:9000/ Then click "get paramaters". It
+may try to change the port to 8002 , change it back to 9000 or it wont work. 
+Then if everything works you should see the grid name show up in the "Grid Name:"
+section. Then click over into the list and select "Add New Grid" it should be in 
+the list at this time and able to pick and log in a user to. Fill out the First 
+name: and Last name: and password of the user. When you first log in you will get
+errors about no inventory and region data. Just click through these as it will 
+create this data and you wont have to click through again. Now you have your 
+avatar enabled and active to walk/fly around the region. 
 
-Next we will download and load a specific terrian for the avatars to move around in and then save the region for backups and then move on to install the admin web based controls  with OSWM. 
+Next we will download and load a specific terrian for the avatars to move around in 
+and then save the region for backups and then move on to install the admin web based
+controls with OSWM. 
+
   ... MORE TO COME LATER 
