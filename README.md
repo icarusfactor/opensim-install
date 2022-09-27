@@ -327,7 +327,9 @@ After entering the IP address it should finish starting up the service and filli
 **Creating Opensim User**
 
 If you had left the screen session be sure to get back into it, so we can create the first user for the grid from the opensim console. We will run through some of the basic grid commands to see what the settings are currently for the grid. 
+```
 screen -r Opensim_1
+```
 
 First we will run the show users command.
 ```
