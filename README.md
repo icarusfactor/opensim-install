@@ -240,7 +240,6 @@ Include-Architecture = "config-include/Standalone.ini"
 ```
 
 We will be using the mysql database instead of the default sqlite. No changes need to be made yet.
-
 ```
 BASEPATH/opensim/bin/config-include/Standalone.ini
 ```
@@ -249,6 +248,8 @@ Not changed but default ,to show its connection to the next. This is the end of 
 ```
 Include-Common = "config-include/Standalone.ini"
 ```
+
+
 
 The changes here will reflect the switch from default SQLite to mysql.
 By selecting Standalone.ini it will also need StandaloneCommon.ini
@@ -320,6 +321,70 @@ Resolve hostname to IP on start (for running inside Docker) [False]:
 External host name [SYSTEMIP]: 69.167.171.208
 ```
 
-After enter the IP address it should finish starting up the service and filling the database that was created for this service. Next we will create the first user and will be the admin user.To exit back out to the main console press CTRL+SHIFT+A.
+After entering the IP address it should finish starting up the service and filling the database that was created for this service. Next we will create the user on the console and setup the client binary to create a login for the grid. One of the users wa screate already by the Estate section. To exit the sessionto the main console press CTRL+A+D
 
+
+**Creating Opensim User**
+If you had left the screen session be sure to get back into it, so we can create the first user for the grid from the opensim console. We will run through some of the basic grid commands to see what the settings are currently for the grid. 
+screen -r Opensim_1
+
+First we will run the show users command.
+```
+Region (shutdown) # show users
+Root agents in region shutdown: 0 (root 0, child 0)
+```
+Next we will see if logins are enabled
+```
+Region (shutdown) # login status
+Login in shutdown are enabled
+```
+
+Then we will check the name of the Estate
+```
+Region (shutdown) # estate show 
+Estate information for region shutdown
+Estate Name          ID      Owner               
+My Estate            101     Daniel Yount
+```
+
+To view the basic data settings for the region.
+```
+Region (shutdown) # show region
+Region information for shutdown
+Region ID                  : c4508773-b09c-4e8a-98f2-41f560f504e8
+Region handle              : 1099511628032000
+Region location            : 1000,1000
+Region size                : 256x256
+Maturity                   : 0
+Region address             : http://69.167.171.208:9000/
+From region file           : ./Regions/Regions.ini
+External endpoint          : 69.167.171.208:9000
+```
+
+Now we will create the second user which will be a normal user. The first user was created by the Estate section.
+```
+Region (shutdown) # create user Joe Smith
+Password:     <- Enter actual password
+Email []: factor@userspace.org
+User ID (enter for random) []: 
+Model name []: 
+18:51:16 - [AUTHENTICATION DB]: Set password for principalID c1ab1be8-cb43-4550-bb14-2e51c10468ec
+18:51:16 - [GRID SERVICE]: GetDefaultRegions returning 0 regions
+18:51:16 - [USER ACCOUNT SERVICE]: Unable to set home for account Joe Smith.
+18:51:16 - [USER ACCOUNT SERVICE]: Created user inventory for Joe Smith
+18:51:16 - [USER ACCOUNT SERVICE]: Creating default appearance items for c1ab1be8-cb43-4550-bb14-2e51c10468ec
+18:51:16 - [USER ACCOUNT SERVICE]: Creating default avatar entries for c1ab1be8-cb43-4550-bb14-2e51c10468ec
+18:51:17 - [USER ACCOUNT SERVICE]: Account Joe Smith c1ab1be8-cb43-4550-bb14-2e51c10468ec created successfully
+```
+
+Now we will exit the screen session CTRL+A+D and install the Cool VL viewer as the client to access our new Grid. We downloaded the binary to our desktop, now we will run the binary so it installs. Change directorty to the viewer and run the binary file. 
+
+bash ./CoolVLViewer-1.30.0.13-Linux-x86_64-Setup  
+cd CoolVLViewer
+./cool_vl_viewer
+Once it starts up, click on the menu "Edit" option and then select "prefrences". 
+Make sure the tab "grids list" is highlighted. In the Login URI enter the IP address with port http://69.167.171.208:9000/ Then click "get paramaters". It may try to change the port to 8002 , change it back to 9000 or it wont work. Then if everything works you should see the grid name show up in the "Grid Name:"" section. Then click over into the list and select "Add New Grid" it should be in the list at this time and able to pick and log in a user to. Fill out the First name: and Last name: and password of the user. When you first log in you will get errors about no inventory and region data. Just click through these as
+it will create this data and you wont have to click through again. Now you have your avatar enabled and active to walk/fly around the region. 
+
+Next we will download and load a specific terrian for the avatars to move around in and then save the region for backups and then move on to install the admin web based controls  with OSWM. 
   ... MORE TO COME LATER 
