@@ -442,7 +442,7 @@ terrain load /home/dyount/opensim.spotcheckit.org/terrains/dw-island1x1-9.raw
 ```
 After loading each you can move your avatar around to see it was immediately change around the avatar. 
 
-**Backup and load regions** 
+**Backup and Restore regions** 
 
 Now we will create a directory for our backups of opensim. 
 ```
