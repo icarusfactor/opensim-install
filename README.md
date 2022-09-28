@@ -325,7 +325,6 @@ After entering the IP address it should finish starting up the service and filli
 
 
 **Creating Opensim User**
-
 If you had left the screen session be sure to get back into it, so we can create the first user for the grid from the opensim console. We will run through some of the basic grid commands to see what the settings are currently for the grid. 
 ```
 screen -r Opensim_1
@@ -381,24 +380,102 @@ Model name []:
 ```
 
 Now we will exit the screen session CTRL+A+D and install the Cool VL viewer as the client to access our new Grid. We downloaded the binary to our desktop, now we will run the binary so it installs. Change directorty to the viewer and run the binary file. 
-
+```
 bash ./CoolVLViewer-1.30.0.13-Linux-x86_64-Setup  
 cd CoolVLViewer
 ./cool_vl_viewer
-Once it starts up, click on the menu "Edit" option and then select "prefrences". 
-Make sure the tab "grids list" is highlighted. In the Login URI enter the IP
-address with port http://69.167.171.208:9000/ Then click "get paramaters". It
-may try to change the port to 8002 , change it back to 9000 or it wont work. 
-Then if everything works you should see the grid name show up in the "Grid Name:"
-section. Then click over into the list and select "Add New Grid" it should be in 
-the list at this time and able to pick and log in a user to. Fill out the First 
-name: and Last name: and password of the user. When you first log in you will get
-errors about no inventory and region data. Just click through these as it will 
-create this data and you wont have to click through again. Now you have your 
-avatar enabled and active to walk/fly around the region. 
+```
 
-Next we will download and load a specific terrian for the avatars to move around in 
-and then save the region for backups and then move on to install the admin web based
-controls with OSWM. 
+Once the viewer starts.
+  Click on the menu "Edit" option and then select "prefrences". 
+  
+  Now make sure the tab "grids list" is highlighted.
+  
+  In the Login URI enter the IP address with port http://69.167.171.208:9000
+  
+  Then click "get paramaters". It may try to change the port to 8002 , change it back to 9000 or it wont work.
+  
+  Then if everything works you should see the grid name show up in the "Grid Name:" section.
+  
+  Then click over into the list and select "Add New Grid" it should be in the list at this time and able to pick and log in as a user to.
+  
+  Fill out the "First name:" and "Last name:" and password of the user. Click login.
+  
+  When you first log in, errors dialog boxes will pop up about no inventory and region data. Just click through these as it will create this initial data and you wont have to click through them again.
+  
+  Now you have your avatar enabled and active to walk/fly around the region. 
+
+**Terrain changes water levels**
+
+Back to the server side within the screen command we will download and install custom terrains. We will also change the default water level. 
+```
+screen -r 43305.Opensim_1
+```
+From the opensim console we will change the default water level wihich is 20m to 25m.  
+While logged into the opensim server with our user avatar when the command is issued you will immedialy see the level of water change. 
+```
+set water height 25
+```
+
+Now we will create a directory for our custom terrains. Then download a few free terrians and load them while we are in the viewer.  
+In the DOCROOT of your opensim account. Not within the opensim directory. 
+```
+mkdir terrain
+cd terrain
+```
+
+Now we will download and test three free terrain files from. 
+https://terrains.dynamicworldz.com/Terrain-Size-256/
+```
+wget https://terrains.dynamicworldz.com/gallery/dw-flat-starter.zip
+wget https://terrains.dynamicworldz.com/gallery/dw-island1x1-7.zip
+wget https://terrains.dynamicworldz.com/gallery/dw-island1x1-9.zip
+unzip *.zip
+```
+
+Now we will load all three of these custom terrains.Lets log back into the opensim Console and type below with full path to the terrain files.  
+```
+screen -r 43305.Opensim_1
+terrain load /home/dyount/opensim.spotcheckit.org/terrains/dw-island1x1-7.r32
+terrain load /home/dyount/opensim.spotcheckit.org/terrains/dw-flat-starter.r32
+terrain load /home/dyount/opensim.spotcheckit.org/terrains/dw-island1x1-9.raw
+```
+After loading each you can move your avatar around to see it was immediately change around the avatar. 
+
+**Backup and load regions** 
+
+Now we will create a directory for our backups of opensim. 
+```
+mkdir backups
+```
+To save the current opensim setup type:
+```
+Region (shutdown) # save oar /home/dyount/opensim.spotcheckit.org/backups/region.oar
+20:13:19 - [ARCHIVER]: Writing archive for region shutdown to /home/dyount/opensim.spotcheckit.org/backups/region.oar
+20:13:19 - [ARCHIVER]: Creating version 0.8 OAR
+20:13:19 - [ARCHIVER]: Added control file to archive.
+20:13:19 - [ARCHIVER]: Writing region shutdown
+20:13:19 - [ARCHIVER]: 0 region scene objects to save reference 0 possible assets
+20:13:19 - [ARCHIVER]: Adding region settings to archive.
+20:13:19 - [ARCHIVER]: Adding parcel settings to archive.
+20:13:19 - [ARCHIVER]: Adding terrain information to archive.
+20:13:19 - [ARCHIVER]: Adding scene objects to archive.
+20:13:19 - [ARCHIVER]: Saving 0 assets
+20:13:19 - [ARCHIVER]: Finished writing out OAR for shutdown
+```
+
+Now that we have our region saved, lets change it by loading another terrain and see if we can activaley load the saved OAR file. 
+```
+terrain load /home/dyount/opensim.spotcheckit.org/terrains/dw-flat-starter.r32
+```
+Now after you view the change terrain happen, load up the previous state. 
+```
+load oar /home/dyount/opensim.spotcheckit.org/backups/region.oar
+```
+
+After running the above command the previous state will be activated again. Now you know how to save and restore your world. 
+
+
+Next will be to install the admin web based controls with OSWM to make managing a GRID much easier to access and work with. 
 
   ... MORE TO COME LATER 
