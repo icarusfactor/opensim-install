@@ -527,7 +527,7 @@ Click the Home icon and then below click "Administrator Section" as we still nee
 Name: SpottyGrid
 Version: Opensim 0.9.2.1
 Path: /home/dyount/opensim.spotcheckit.org/opensim/
-HG url: opensim.francogrid.org:80
+HG url: opensim.spotcheckit.org:80
 Database: dyount_opensim
 ```
 Then click Update. Now the name and version of your current selected grid should be showing your grids name. Next in "Administrator Section" click "Configuring OSMW" . The first option is "/osmw/" and we created a symlink for this default options so no change needed. The second option is the only one needed to be changed for now tol your email. Then next will be in "Administrator Section" again "Editing configuration files" , once you click on this section you may see red notifications saying files do not exist. It will show the files it found and the configurations files can be edited and updated in here. 
@@ -542,7 +542,7 @@ mv shutdown_commands.txt.example shutdown_commands.txt
 You will still see two other files in notifications but we dont need them for now but will be used for a connected GRID instead of the Standalone GRID that we are setting up now.
 
 
-This works except for the PHP Send commands as its https not http as my http gets redirected to https and these commands wont fit in a https call. Will work on instructions for settings up XMLRPC access locally as it does work as I ran a curl command to shutdown my opensim service on port 9000.  
+This works except for the PHP Send commands as its https not http as my http gets redirected to https and these commands wont fit in a https call. Will work on instructions for settings up XMLRPC access locally as it does work I ran the curl command to shutdown my opensim service on port 9000.  
 
 
   ... MORE TO COME LATER 
