@@ -476,6 +476,73 @@ load oar /home/dyount/opensim.spotcheckit.org/backups/region.oar
 After running the above command the previous state will be activated again. Now you know how to save and restore your world. 
 
 
-Next will be to install the admin web based controls with OSWM to make managing a GRID much easier to access and work with. 
+**Installing OSMW Opensim Manager Web Interface**
+
+While managing your world with the Opensim Console is fine, having a browser based manager will make it much easier to keep it managed and you can immedialty see textures and maps  not just the data. 
+
+I have upgraded the original OSMW as it was limited to the End Of Life PHP5.x and made it work with PHP7.x and maybe even 8.x. As account of user change directory to the Opensim DOCROOT of the account. In here we will use git clone to grab OSMW. 
+```
+ git clone https://github.com/icarusfactor/OpenSim-Manager-Web-V5.git
+ ln -s /home/dyount/opensim.spotcheckit.org/OpenSim-Manager-Web-V5 osmw
+```
+
+Now that the code is in place we need to install the additional database tables that will be used by OSMW into the opensim standard database as root user.  
+```
+cd /osmw/docs/sql
+mysql dyount_opensim  < ./database.sql 
+mysql dyount_opensim < ./database_NPC.sql
+```
+
+Six new tables will be created in the database called config,moteurs,users and with the experimental npc tables gestionnaire,inventaire,npc. 
+
+Now we can proceed to the installation of OSMW by going to the URL of the install. 
+```
+https://opensim.spotcheckit.org/osmw/
+```
+
+It should come up with an error as the install has not been done yet, click the link to start the install. Now you should see the title "Open Simulator Manager Web Installer".
+Enter the 5 pieces of data. the database will be located on the server itself. 
+```
+Database Host : 127.0.0.1 
+Database User : dyount_opensim
+Database Password : PaS$W0Rd
+Database Name : dyount_opensim
+DNS Name Server : opensim.spotcheckit.org
+```
+
+Click the install button and then you should see the message.
+```
+Creation of effected configuration file with success ...
+```
+
+If so,then go to the follow URL to log into OSMW for the first time and login using the inital password from the opensim database user,first name is Super,Last name is Admin and the password is password. Ths can be changed after login by going to right hand side Super Admin drop down and modify your account replace the password , or other credtials if you wish, but at least the password.   
+```
+https://opensim.spotcheckit.org/osmw/
+Firstname: Super
+Lastname: Admin
+Password: password
+```
+Click the Home icon and then below click "Administrator Section" as we still need to configure file locations and basic naming conventions of your Opensim GRID. Click on "Management simulators" and in here enter your grid name. 
+```
+Name: SpottyGrid
+Version: Opensim 0.9.2.1
+Path: /home/dyount/opensim.spotcheckit.org/opensim/
+HG url: opensim.francogrid.org:80
+Database: dyount_opensim
+```
+Then click Update. Now the name and version of your current selected grid should be showing your grids name. Next in "Administrator Section" click "Configuring OSMW" . The first option is "/osmw/" and we created a symlink for this default options so no change needed. The second option is the only one needed to be changed for now tol your email. Then next will be in "Administrator Section" again "Editing configuration files" , once you click on this section you may see red notifications saying files do not exist. It will show the files it found and the configurations files can be edited and updated in here. 
+
+Create config files not set yet in Opensim as account user so the manager will find and use and be able to save to them.
+```
+cd /home/dyount/opensim.spotcheckit.org/opensim/bin
+mv startup_commands.txt.example startup_commands.txt
+mv shutdown_commands.txt.example shutdown_commands.txt
+```
+
+You will still see two other files in notifications but we dont need them for now but will be used for a connected GRID instead of the Standalone GRID that we are setting up now.
+
+
+This works except for the PHP Send commands as its https not http as my http gets redirected to https and these commands wont fit in a https call. Will work on instructions for settings up XMLRPC access locally as it does work as I ran a curl command to shutdown my opensim service on port 9000.  
+
 
   ... MORE TO COME LATER 
