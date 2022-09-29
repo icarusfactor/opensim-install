@@ -546,6 +546,7 @@ This works except for the PHP Send commands as its https not http as my http get
 
 **Example CURL command to call XMLRPC**
 
+```
 curl --header "Content-Type: application/xml" \
   --request POST \
   --data "<methodCall>
@@ -566,6 +567,6 @@ curl --header "Content-Type: application/xml" \
         </param>
         </params>
 </methodCall>" http://opensim.spotcheckit.org:9000
-
+```
 
   ... MORE TO COME LATER 
