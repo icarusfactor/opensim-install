@@ -544,5 +544,28 @@ You will still see two other files in notifications but we dont need them for no
 
 This works except for the PHP Send commands as its https not http as my http gets redirected to https and these commands wont fit in a https call. Will work on instructions for settings up XMLRPC access locally as it does work I ran the curl command to shutdown my opensim service on port 9000.  
 
+**Example CURL command to call XMLRPC**
+
+curl --header "Content-Type: application/xml" \
+  --request POST \
+  --data "<methodCall>
+       <methodName>admin_console_command</methodName>
+        <params><param>
+         <value>
+           <struct>
+            <member>
+              <name>password</name>
+                <value><string>PaS$w0Rd</string></value>
+            </member>
+            <member>
+               <name>command</name>
+               <value>quit</value>
+            </member>
+           </struct>
+          </value>
+        </param>
+        </params>
+</methodCall>" http://opensim.spotcheckit.org:9000
+
 
   ... MORE TO COME LATER 
