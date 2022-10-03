@@ -568,7 +568,7 @@ curl --header "Content-Type: application/xml" \
 </methodCall>" http://opensim.spotcheckit.org:9000
 ```
 
-I have now modified OSMW to work with modern XMLRPC by using cUrl opensim wiki had a method for PHP7 fsocket, but I would rather use CURL its more robust and woudl like to use oAuthV2 , but that would require add it to the opensim core binary , maybe a module, would like it to be a module which you could still use the older XMLRPC method or enable the Oauth V2 token method , which is more secure. I also had to figure out how to send the console output to a file without overriding the CPU of the system. I could not just do a simple STDOUT/STDERR redirect Mono was not liking it at all. So I had switched to using screen log file method instead. Will have to integrate this new method into the systemd format.  
+I have now modified OSMW to work with modern XMLRPC by using cUrl opensim wiki had a method for PHP7 fsocket, but I would rather use CURL its more robust and would like to use oAuthV2 , but that would require add it to the opensim core binary , maybe a module, would like it to be a module which you could still use the older XMLRPC method or enable the Oauth V2 token method , which is more secure. I also had to figure out how to send the console output to a file without overriding the CPU of the system. I could not just do a simple STDOUT/STDERR redirect Mono was not liking it at all. So I had switched to using screen log file method instead. Will have to integrate this new method into the systemd format.  
 
 Currently to start opensim in a detached multi-user screen I do the following. 
 ```
