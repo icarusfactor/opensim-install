@@ -568,4 +568,21 @@ curl --header "Content-Type: application/xml" \
 </methodCall>" http://opensim.spotcheckit.org:9000
 ```
 
+I have now modified OSMW to work with modern XMLRPC by using cUrl opensim wiki had a method for PHP7 fsocket, but I would rather use CURL its more robust and woudl like to use oAuthV2 , but that would require add it to the opensim core binary , maybe a module, would like it to be a module which you could still use the older XMLRPC method or enable the Oauth V2 token method , which is more secure. I also had to figure out how to send the console output to a file without overriding the CPU of the system. I could not just do a simple STDOUT/STDERR redirect Mono was not liking it at all. So I had switched to using screen log file method instead. Will have to integrate this new method into the systemd format.  
+
+Currently to start opensim in a detached multi-user screen I do the following. 
+```
+screen -S Opensim_1 -dm bash -c "mono --desktop -O=all OpenSim.exe" -L;screen -S Opensim_1 -X multiuser on;screen -S Opensim_1 -X acladd dyount
+```
+Then to set the screen sessions log file for OSMW to read that the XMLRPC command did its job
+```
+screen -S 85541.Opensim_1 -X logfile /home/dyount/opensim.spotcheckit.org/opensim/bin/OpenSim.Console.log
+```
+Finally to enable the screen log session to start logging. 
+```
+screen -S 85541.Opensim_1 -X log
+```
+
+This will let the opensim program run while using very little processing power. The standard redirect was slamming one of the cores all of the time. It was in no way practical. This setup is. Next I will need to modify OSMW to have a page for sending and receiving commands and to get its http files and cache them so they can be distrubuted as https in the manager. New browsers really do not like http any more and has to be mitigated. Finishing this setup will let me have the option to run opensim with a gui or from comandline or both with little effort. Just figuring out and updating the code is a lot of effort to finish this tutorial.  
+
   ... MORE TO COME LATER 
