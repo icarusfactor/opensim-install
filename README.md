@@ -142,6 +142,10 @@ the default directory, see if I do not need to do this.
 
 https://github.com/Nino85Whitman/OpenSim-Manager-Web-V5
 
+My modifed(forked) version of OSMW that works with PHP7 and has an added Console control page to act as a read and write terminal interface to opensim, but you have to follow this tutorial to get it to work for reading the active console interface by use of screen.  
+
+https://github.com/icarusfactor/OpenSim-Manager-Web-V5
+
 
 **Wordpress:**
 The base CMS will create a basic layout for working with the opensim interface. 
