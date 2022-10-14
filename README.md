@@ -297,7 +297,7 @@ gridnick = "spottygrid"
 ```
 
 
-In this section we will enable the display of an actual wep page that can be used for showing news,registeration to grid or even maps or webGL pages when the user selects
+In this section we will enable the display of an actual web page that can be used for showing news,registeration to grid or even maps or webGL pages when the user selects
 your grid to login to. As user follow the below steps to set the webserver welcome page.
 ```
 cd /home/dyount/opensim.spotcheckit.org/
@@ -546,6 +546,28 @@ I have upgraded the original OSMW as it was limited to the End Of Life PHP5.x an
  git clone https://github.com/icarusfactor/OpenSim-Manager-Web-V5.git
  ln -s /home/dyount/opensim.spotcheckit.org/OpenSim-Manager-Web-V5 osmw
 ```
+
+We will need to install inotify-tools to watch for files created by opensim running as root and change them instead to be owned by the account so the web manager can get access to them. So as root install the below package.
+
+```
+yum install epel-release
+yum install inotify-tools
+```
+
+We will create a script in our osmw dreictory to start this active conversion and needs to be run as root.
+```
+vim check_backup_dir.sh
+chmod +x check_backup_dir.sh
+```
+
+The add script to file. 
+```
+inotifywait -mr -e create /home/dyount/opensim.spotcheckit.org/backups 2>&-| sed -u 's/ CREATE //g' |
+    while read file; do
+    chown dyount.dyount $file
+    done
+```
+
 
 Now that the code is in place we need to install the additional database tables that will be used by OSMW into the opensim standard database as root user.  
 ```
