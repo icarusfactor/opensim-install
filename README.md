@@ -126,8 +126,6 @@ http://opensimulator.org/dist/opensim-0.9.2.1.tar.gz
 
 Change directory to opensim user directory example in my case /home/dyount/opensim.spotcheckit.org/
 ```
-mkdir opensim
-cd opensim 
 tar -zxvf opensim-0.9.2.1.tar.gz
 The binaries and startup files are located in the /bin directory. 
 ```
@@ -183,9 +181,16 @@ Change then name of the constant host name prompt display, I used the IP address
 Enable saving the history of the console file and how many lines of it and if it was timestampped. I disabled crashes , dont need to enable this until problems start occuring and need to debug the issue and I have enabled the PID file for the main binary. No limit set by default, but always good to set a small and large prime size limit to limit any crashes from excessively large prims or prims you can not find in your map. Also allow 
 prims to be bound by the physics engine or not.  
 
-Changes in the [Const] section.
+Changes in the [Const] section. This needs to be a domain name and not IP to support the web page load on start up and change the PublicPort to reflect the active port. 
 ```
-BaseHostname = "69.167.171.208"
+BaseHostname = "opensim.spotcheckit.org"
+PublicPort = "9000"
+
+```
+
+Changes in the [Network] uncomment the default just to make sure. 
+```
+http_listener_port = 9000
 ```
 
 Changes in the [Startup] section.
@@ -231,7 +236,7 @@ Changes in the [Groups] section. This is part of and used by the messaging servi
 ```
 Enabled = true
 LevelGroupCreate = 0
-HomeURI = "http://69.167.171.208:9000"
+HomeURI = "http://${Const|BaseHostname}:${Const|PublicPort}"
 MessagingEnabled = true
 MessagingModule = "Groups Messaging Module V2"
 DebugEnabled = false
@@ -257,7 +262,7 @@ Include-Common = "config-include/Standalone.ini"
 
 The changes here will reflect the switch from default SQLite to mysql.
 By selecting Standalone.ini it will also need StandaloneCommon.ini
-says do not hcange any option in Standalone.ini but I ended up chaning the null to mysql since we were using mysql.
+says do not change any option in Standalone.ini
 ```
 BASEPATH/opensim/bin/config-include/Standalone.ini
 ```
@@ -290,6 +295,58 @@ Changes made in [GridInfoService] section. Give the grid a name and nick name.
 gridname = "spotcheckit.org"
 gridnick = "spottygrid"
 ```
+
+
+In this section we will enable the display of an actual wep page that can be used for showing news,registeration to grid or even maps or webGL pages when the user selects
+your grid to login to. As user follow the below steps to set the webserver welcome page.
+```
+cd /home/dyount/opensim.spotcheckit.org/
+mkdir welcome 
+cd welcome
+```
+
+Under the DOCROOT in the weclome directory of Apache place the below basic web page we will use as a starter for the grid. 
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SPOTTY GRID</title>
+    <style>
+        .head1 {
+            font-size:40px;
+            color:#009900;
+        }
+        footer {
+            width: 100%;
+            bottom: 0px;
+            background-color: #000;
+            color: #fff;
+            position: absolute;
+            padding-top:20px;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="head1">SPOTTY GRID</div>
+    </header>
+        <section id="Content">
+            <h3>Content section</h3>
+        <a href="http://opensimulator.org">HOME</a>
+        <a href="https://get.webgl.org">NEWS</a>
+        </section>
+    <footer>Footer Section</footer>
+</body>
+</html>
+```
+
+Now still in section [GridInfoService] comment out the below line to enable this
+```
+[GridInfoService]
+welcome = ${Const|BaseURL}/welcome
+```
+
 
 
 Now that we have setup the base opensim system we need to make sure the SystemD file is in place to start the server side program and an empty database is setup that uses the credtials in the [DatabaseService] section of the configuration file. 
@@ -418,11 +475,11 @@ screen -r 43305.Opensim_1
 From the opensim console we will change the default water level wihich is 20m to 25m.  
 While logged into the opensim server with our user avatar when the command is issued you will immedialy see the level of water change. 
 ```
-set water height 25
+set water height 24.8
 ```
 
-Now we will create a directory for our custom terrains. Then download a few free terrians and load them while we are in the viewer.  
-In the DOCROOT of your opensim account. Not within the opensim directory. 
+Now we can CTRL+A+D to exit console to terminal will create a directory for our custom terrains. Then download a few free terrians and load them while we are in the viewer.  
+In the DOCROOT of your opensim account as user. Not within the opensim directory. 
 ```
 mkdir terrain
 cd terrain
@@ -448,11 +505,12 @@ After loading each you can move your avatar around to see it was immediately cha
 
 **Backup and Restore regions** 
 
-Now we will create a directory for our backups of opensim. 
+Now we will again exit the Console CTRL+A+D and use the terminal create a directory for our backups of opensim. In the DOCROOT of the web server as user. 
 ```
 mkdir backups
 ```
-To save the current opensim setup type:
+
+Now back into the screen Console to save the current opensim setup type:
 ```
 Region (shutdown) # save oar /home/dyount/opensim.spotcheckit.org/backups/region.oar
 20:13:19 - [ARCHIVER]: Writing archive for region shutdown to /home/dyount/opensim.spotcheckit.org/backups/region.oar
@@ -479,12 +537,11 @@ load oar /home/dyount/opensim.spotcheckit.org/backups/region.oar
 
 After running the above command the previous state will be activated again. Now you know how to save and restore your world. 
 
-
 **Installing OSMW Opensim Manager Web Interface**
 
 While managing your world with the Opensim Console is fine, having a browser based manager will make it much easier to keep it managed and you can immedialty see textures and maps  not just the data. 
 
-I have upgraded the original OSMW as it was limited to the End Of Life PHP5.x and made it work with PHP7.x and maybe even 8.x. As account of user change directory to the Opensim DOCROOT of the account. In here we will use git clone to grab OSMW. 
+I have upgraded the original OSMW as it was limited to the End Of Life PHP5.x and made it work with PHP7.x and maybe even 8.x. As account of user change directory to the Opensim DOCROOT of the account. In here we will use git clone to grab OSMW as user. 
 ```
  git clone https://github.com/icarusfactor/OpenSim-Manager-Web-V5.git
  ln -s /home/dyount/opensim.spotcheckit.org/OpenSim-Manager-Web-V5 osmw
@@ -519,7 +576,23 @@ Click the install button and then you should see the message.
 Creation of effected configuration file with success ...
 ```
 
-If so,then go to the follow URL to log into OSMW for the first time and login using the inital password from the opensim database user,first name is Super,Last name is Admin and the password is password. Ths can be changed after login by going to right hand side Super Admin drop down and modify your account replace the password , or other credtials if you wish, but at least the password.   
+A patch to the newly created config will need to be made to this new file. 
+```
+cd /home/dyount/opensim.spotcheckit.org/OpenSim-Manager-Web-V5/inc
+vim config.php
+```
+
+Add the below lines to the config file. The slash will denote MS Windows or Linux OS.
+```
+/*Save locations base */
+$baseSave = "../../";
+$baseBackups = "backups";
+$baseImages = "images";
+
+$slash = "/";
+```
+
+Then go to the follow URL to log into OSMW for the first time and login using the inital password from the opensim database user,first name is Super,Last name is Admin and the password is password. Ths can be changed after login by going to right hand side Super Admin drop down and modify your account replace the password , or other credtials if you wish, but at least the password.   
 ```
 https://opensim.spotcheckit.org/osmw/
 Firstname: Super
@@ -534,7 +607,8 @@ Path: /home/dyount/opensim.spotcheckit.org/opensim/
 HG url: opensim.spotcheckit.org:80
 Database: dyount_opensim
 ```
-Then click Update. Now the name and version of your current selected grid should be showing your grids name. Next in "Administrator Section" click "Configuring OSMW" . The first option is "/osmw/" and we created a symlink for this default options so no change needed. The second option is the only one needed to be changed for now tol your email. Then next will be in "Administrator Section" again "Editing configuration files" , once you click on this section you may see red notifications saying files do not exist. It will show the files it found and the configurations files can be edited and updated in here. 
+
+Then click Update. Now the name and version of your current selected grid should be showing your grids name. Next in "Administrator Section" click "Configuring OSMW" . The first option is "/osmw/" and we created a symlink for this default options so no change needed. The second option is the only one needed to be changed for now to your email. Clock Save and then next will be in "Administrator Section" again "Editing configuration files" , once you click on this section you may see red notifications saying files do not exist. It will show the files it found and the configurations files can be edited and updated in here. 
 
 Create config files not set yet in Opensim as account user so the manager will find and use and be able to save to them.
 ```
@@ -543,10 +617,9 @@ mv startup_commands.txt.example startup_commands.txt
 mv shutdown_commands.txt.example shutdown_commands.txt
 ```
 
-You will still see two other files in notifications but we dont need them for now but will be used for a connected GRID instead of the Standalone GRID that we are setting up now.
+You will still see one other file in notifications but we dont need it for now, but will be used for a connected GRID instead of the Standalone GRID that we are setting up now.
 
-
-This works except for the PHP Send commands as its https not http as my http gets redirected to https and these commands wont fit in a https call. Will work on instructions for settings up XMLRPC access locally as it does work I ran the curl command to shutdown my opensim service on port 9000.  
+ To test XMLRPC access locally, I ran the curl command to shutdown my opensim service on port 9000 but any Console command can be placed of the value for command. 
 
 **Example OpenSim CURL command to call XMLRPC**
 ```
@@ -572,7 +645,9 @@ curl --header "Content-Type: application/xml" \
 </methodCall>" http://opensim.spotcheckit.org:9000
 ```
 
-I have now modified OSMW to work with modern XMLRPC by using cUrl opensim wiki had a method for PHP7 fsocket, but I would rather use CURL its more robust and would like to use oAuthV2 , but that would require add it to the opensim core binary , maybe a module, would like it to be a module which you could still use the older XMLRPC method or enable the Oauth V2 token method , which is more secure. I also had to figure out how to send the console output to a file without overriding the CPU of the system. I could not just do a simple STDOUT/STDERR redirect Mono was not liking it at all. So I had switched to using screen log file method instead. Will have to integrate this new method into the systemd format.  
+I have now modified OSMW to work with modern XMLRPC by using cUrl opensim wiki had a method for PHP7 fsocket, but I would rather use CURL its more robust and would like to use oAuthV2 in future versions, but that would require to add it to the opensim core binary , maybe a module, would like it to be a module which you could still use the older XMLRPC method or enable the Oauth V2 token method, which is current secure method. I also had to figure out how to send the console output to a file without overriding the CPU of the system. I could not just do a simple STDOUT/STDERR redirect Mono was not liking it at all. So I had switched to using screen log file method instead. Will have to integrate this new method into the systemd format.  
+
+**Start OpenSim this way until systemD method is worked out to write Console log file.** 
 
 Currently to start opensim in a detached multi-user screen I do the following. 
 ```
