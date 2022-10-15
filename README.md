@@ -547,27 +547,48 @@ I have upgraded the original OSMW as it was limited to the End Of Life PHP5.x an
  ln -s /home/dyount/opensim.spotcheckit.org/OpenSim-Manager-Web-V5 osmw
 ```
 
-We will need to install inotify-tools to watch for files created by opensim running as root and change them instead to be owned by the account so the web manager can get access to them. So as root install the below package.
+So we dont have to deal with permission issues, it's best to install inotify-tools to watch for files created by opensim running as root and change them instead to be owned by the account so the web manager can get access to them. So as root, install the below package.
 
 ```
 yum install epel-release
 yum install inotify-tools
 ```
 
-We will create a script in our osmw dreictory to start this active conversion and needs to be run as root.
+We will create a script in our osmw directory to start this active conversion and needs to be run as root.
 ```
-vim check_backup_dir.sh
-chmod +x check_backup_dir.sh
-```
-
-The add script to file. 
-```
-inotifywait -mr -e create /home/dyount/opensim.spotcheckit.org/backups 2>&-| sed -u 's/ CREATE //g' |
-    while read file; do
-    chown dyount.dyount $file
-    done
+vim inotify-change-ownership.sh
+chmod +x inotify-change-ownership.sh
 ```
 
+The add script to file from https://gist.github.com/gravelld/7b3fdec08a5c2c74258fca29b1e18bb9
+```
+#!/bin/sh
+# Usage:
+# inotify-change-ownership <dir> <user> <group>
+# Arguments:
+# dir
+#     The directory name to watch
+# user
+#     The user to which to 'chown' the file
+# group
+#     The group to which to 'chgrp' the file
+
+inotifywait -mrq -e create -e modify --format %w%f "$1" | while read FILE
+do
+  chown -v $2 "$FILE"
+  chgrp $3 "$FILE"
+  if [ -d "$FILE" ]; then
+    chmod 775 "$FILE"
+  elif [ -f "$FILE" ]; then
+    chmod 664 "$FILE"
+  fi
+done
+```
+
+To run the file checker in the background , I will move this to the systemD script, but for now run it manually in the background and will have to kill it manually when not wanting it active. 
+```
+./inotify-change-ownership.sh /home/dyount/opensim.spotcheckit.org/backups/ dyount dyount  >/dev/null 2>&1 &
+```
 
 Now that the code is in place we need to install the additional database tables that will be used by OSMW into the opensim standard database as root user.  
 ```
