@@ -3,11 +3,11 @@
 
 ***
 
-Step by step setup of a full Opensim system from server to client.
+###### Step by step setup of a full Opensim system from server to client.
 
 ***
 
-NOTE: Server Operating system is CentOS7.9 but should work on any Linux version.
+###### NOTE: Server Operating system is CentOS7.9 but should work on any Linux version.
 ***
 
 *Programs Required:*
@@ -20,7 +20,7 @@ NOTE: Server Operating system is CentOS7.9 but should work on any Linux version.
 * Opensim
 * Screen
 * Inotify-tools
-* OSMW – OpenSim Manager Web(forked version)
+* OSMW – OpenSim Manager Web(forked version)(This version not updated on GITHUB yet)
 * SystemD support scripts
 * Cool VL Viewer
 * Wordpress  (TBA)
@@ -182,6 +182,7 @@ yum install inotify-tools
 ```
 
 **OSWM - OpenSim Manager Web:**
+(This version not updated on GITHUB yet)
 
 This is a user-friendly web interface that will access the remote XMLRPC port of Opensim to change configurations on the fly or other basic opeations that will need to be restarted before being active within the Opensim environemnt.  
 
