@@ -3,12 +3,11 @@
 
 ***
 
-###Step by step setup of a full Opensim system from server to client.###
+Step by step setup of a full Opensim system from server to client.
 
 ***
 
-######NOTE: Server Operating system is CentOS7.9 but should work on any Linux version.######
-
+NOTE: Server Operating system is CentOS7.9 but should work on any Linux version.
 ***
 
 *Programs Required:*
