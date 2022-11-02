@@ -20,7 +20,7 @@
 * Opensim
 * Screen
 * Inotify-tools
-* OSMW – OpenSim Manager Web(forked version)(This version not updated on GITHUB yet)
+* OSMW – OpenSim Manager Web(forked version)
 * SystemD support scripts
 * Cool VL Viewer
 * Wordpress  (TBA)
@@ -182,7 +182,7 @@ yum install inotify-tools
 ```
 
 **OSWM - OpenSim Manager Web:**
-(This version not updated on GITHUB yet)
+
 
 This is a user-friendly web interface that will access the remote XMLRPC port of Opensim to change configurations on the fly or other basic opeations that will need to be restarted before being active within the Opensim environemnt.  
 
