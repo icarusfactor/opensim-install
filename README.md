@@ -58,6 +58,10 @@
 
 *Start and Stop Opensim with Systemd:*
 
+*Wordpress Database,Theme Setup (TBA)*
+
+*Wordpress Opensim User/Avatar Plugin Setup (TBA)*
+
 *Example CURL Opensim command to call XMLRPC:*
 
 
