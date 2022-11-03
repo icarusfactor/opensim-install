@@ -3,11 +3,11 @@
 
 ***
 
-###Step by step setup of a full Opensim system from server to client.
+### Step by step setup of a full Opensim system from server to client.
 
 ***
 
-######NOTE: Server Operating system is CentOS7.9 but should work on any Linux version.
+###### NOTE: Server Operating system is CentOS7.9 but should work on any Linux version.
 
 ***
 
@@ -62,6 +62,8 @@
 
 
 ***
+#### **Programs Required **
+
 
 **Linux :**
 
@@ -82,8 +84,6 @@
  manage their avatar and profile with a Wordpress plugin and admin control
  with the OSMW interface. 
 
-**HOWTO INSTALL APACHE:**
-
 ```
 yum update -y
 yum install httpd
@@ -96,8 +96,6 @@ systemctl enable httpd.service
  The is the stable version of mysql and will work with opensim and OSWM.
  and recent versions of Wordpress No special setups need to be made so 
  a basic install will work. 
-
-**HOWTO INSTALL MYSQL:**
 
 ```
 rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
@@ -308,7 +306,7 @@ rm w4os-opensimulator-web-interface.2.3.10.zip
 
 Now when we setup the empty database for Wordpress and step through the browser based installation which will be done later in this tutorial the plugin will be ready to activate and configure and use.   
 
-**Opensim Configuration :**
+#### **OpenSim Section Configuration**
 
 Now that we have all our programs that are required for a basic setup we will start the actual configuration of these programs. 
 
