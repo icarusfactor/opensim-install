@@ -441,7 +441,11 @@ gridnick = "spottygrid"
 ```
 
 
-**Web Intro page :** 
+***
+
+## **Web Intro page**
+
+***
 
 In this section we will enable the display of an actual web page that can be used for showing news,registeration to grid or even maps or webGL pages when the user selects
 your grid to login to. As a user follow the below steps to set the Opensim webserver welcome page.
@@ -493,8 +497,11 @@ Now still in section [GridInfoService] comment out the below line to enable this
 welcome = ${Const|BaseURL}/welcome
 ```
 
+***
 
-**OpenSim Setup :**
+## **OpenSim Setup**
+
+***
 
 Now that we have setup the base Opensim system we will use the screen command to do the inital start and setup of Opensim as currently the database is empty and needs to be setup and will pull the login credtials in the [DatabaseService] section of the configuration file. Later we will install an automatic start and stop program, just do not have a good way to do this from systemD as of yet and the one I use I made part of the OSMW package currently. 
 
@@ -589,8 +596,11 @@ Model name []:
 18:51:17 - [USER ACCOUNT SERVICE]: Account Joe Smith c1ab1be8-cb43-4550-bb14-2e51c10468ec created successfully
 ```
 
+***
 
-**Cool VR Viewer Setup :**
+## **Cool VR Viewer Setup**
+
+***
 
 Once the viewer starts.
   Click on the menu "Edit" option and then select "prefrences". 
@@ -612,7 +622,11 @@ Once the viewer starts.
   
   Now you have your avatar enabled and active to walk/fly around the region. 
 
-**Terrain changes and water levels**
+***
+
+## **Terrain changes and water levels**
+
+***
 
 Back to the server side within the screen command we will download and install custom terrains. We will also change the default water level. 
 ```
@@ -649,7 +663,11 @@ terrain load /home/dyount/opensim.spotcheckit.org/backups/dw-island1x1-9.raw
 ```
 After loading each you can move your avatar around to see it was immediately change around the avatar. 
 
-**Backup and Restore regions** 
+***
+
+## **Backup and Restore regions**
+
+***
 
 Now in the screen Console to save the current opensim setup type:
 ```
@@ -678,8 +696,11 @@ load oar /home/dyount/opensim.spotcheckit.org/backups/region.oar
 
 After running the above command the previous state will be activated again. Now you know how to save and restore your world. 
 
+***
 
-**Additonal Databases and OSMW Setup config file :**
+## **Additonal Databases and OSMW Setup config file**
+
+***
 
 Now that the code is in place we need to install the additional database tables that will be used by OSMW into the opensim standard database as root user.  
 ```
@@ -749,8 +770,11 @@ Database: dyount_opensim
 
 Then click Update. Now the name and version of your current selected grid should be showing your grids name. Next in "Administrator Section" click "Configuring OSMW" . The first option is "/osmw/" and we created a symlink for this default options so no change needed. The second option is the only one needed to be changed for now to your email. Clock Save and then next will be in "Administrator Section" again "Editing configuration files" , once you click on this section you may see red notifications saying files do not exist. It will show the files it found and the configurations files can be edited and updated in here. 
 
+***
 
-**Enable extra files to Opensim :**
+## **Enable extra files to Opensim**
+
+***
 
 Create config files not set yet in Opensim as account user so the manager will find and use and be able to save to them.
 ```
@@ -761,7 +785,11 @@ mv shutdown_commands.txt.example shutdown_commands.txt
 
 You will still see one other file in notifications but we dont need it for now, but will be used for a connected GRID instead of the Standalone GRID that we are setting up now.
 
-**Start and Stop Opensim with Systemd :**
+***
+
+## **Start and Stop Opensim with Systemd**
+
+***
 
 You should be able to from the commandline be able to easily start and stop Opensim from the SystemD service. 
 ```
