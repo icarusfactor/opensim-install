@@ -62,8 +62,10 @@
 
 
 ***
+
 ## **Programs Required **
 
+***
 
 **Linux :**
 
@@ -306,7 +308,11 @@ rm w4os-opensimulator-web-interface.2.3.10.zip
 
 Now when we setup the empty database for Wordpress and step through the browser based installation which will be done later in this tutorial the plugin will be ready to activate and configure and use.   
 
+***
+
 ## **OpenSim Section Configuration**
+
+***
 
 Now that we have all our programs that are required for a basic setup we will start the actual configuration of these programs. 
 
