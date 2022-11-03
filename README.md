@@ -24,8 +24,8 @@
 * OSMW – OpenSim Manager Web(forked version)
 * SystemD support scripts
 * Cool VL Viewer
-* Wordpress  (TBA)
-* w4os – OpenSimulator Web Interface Plugin (TBA)
+* Wordpress
+* w4os – OpenSimulator Web Interface Plugin
 
 ***
 *OpenSim Section Configuration:*
