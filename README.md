@@ -3,11 +3,12 @@
 
 ***
 
-###### Step by step setup of a full Opensim system from server to client.
+###Step by step setup of a full Opensim system from server to client.
 
 ***
 
-###### NOTE: Server Operating system is CentOS7.9 but should work on any Linux version.
+######NOTE: Server Operating system is CentOS7.9 but should work on any Linux version.
+
 ***
 
 *Programs Required:*
@@ -183,7 +184,6 @@ yum install inotify-tools
 
 **OSWM - OpenSim Manager Web:**
 
-
 This is a user-friendly web interface that will access the remote XMLRPC port of Opensim to change configurations on the fly or other basic opeations that will need to be restarted before being active within the Opensim environemnt.  
 
 While managing your world with the Opensim Console is fine, having a browser based manager will make it much easier to keep it managed and configured and you can immedialty see textures and maps not just the data and makes organizing much easier. 
@@ -255,16 +255,63 @@ cd CoolVLViewer
 ./cool_vl_viewer
 ```
 
-**Wordpress  (TBA):**
+**Wordpress :**
 
-I do not have the install steps for this packag yet.
+As account user we will download,uncompress and this will create a subdreictory that it will install to and setup latest version of Wordpress. It is best to download the latest version for security reason and will try to keep it standard to upgrades wont be a problem.
 
-**w4os – OpenSimulator Web Interface Plugin (TBA):**
+After downloading and installing we will need to create an .htaccess file to give access to Wordpress in the BASEDIR.   
 
-I do not have the install steps for this packag yet.
+```
+cd BASEDIR/
+wget https://wordpress.org/latest.tar.gz
+tar -xzvf latest.tar.gz
+vim .htaccess
+```
 
+To give access to the Wordpress install from the default directory that it creates once uncompressed we will create a basic .htaccess file in BASEDIR.
+```
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /wordpress
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /wordpress/index.php [L]
+</IfModule>
+```
+
+Now we will change to the directory as user and verify that its installed and is active by using wp commandline client. We will need to create a database before we can do much more, but will stay in this subdirectory for now.
+```
+cd wordpress
+wp core version
+6.1
+```
+
+You can also test that Wordpress is working and ready to install by going to the domain plus the subdirectory. We will create a base index page later , but need to make sure the applications(opensim,osmw,wordpress and general saved files) are seprate and not all installed into the base directory and this is helpful if any one of them need to be upgraded and could be done individually. 
+
+With any modern browser you can go to the site url. Then it should redirect to message about clicking here to setup the new site. We wont go any further since we dont have database setup yet. 
+```
+https://opensim.spotcheckit.org/wordpress/
+There doesn't seem to be a wp-config.php file. It is needed before the installation can continue.
+```
+
+**w4os – OpenSimulator Web Interface Plugin :**
+
+In the current state, without being connected to Wordpress's database we wont be able to install any plugins, unless we do it manually. So lets do so.
+```
+cd wp-content/plugins/
+wget https://downloads.wordpress.org/plugin/w4os-opensimulator-web-interface.2.3.10.zip
+unzip w4os-opensimulator-web-interface.2.3.10.zip
+rm w4os-opensimulator-web-interface.2.3.10.zip
+```
+
+Now when we setup the empty database for Wordpress and step through the browser based installation which will be done later in this tutorial the plugin will be ready to activate and configure and use.   
 
 **Opensim Configuration :**
+
+Now that we have all our programs that are required for a basic setup we will start the actual configuration of these programs. 
+
 
 **Files changed from default settings:**
 
@@ -721,7 +768,7 @@ service opensim stop
 
 **Example OpenSim CURL command to call XMLRPC**
 
- To test XMLRPC access locally, I ran the curl command to shutdown my opensim service on port 9000 but any Console command can be placed of the value for command. 
+ Not required but good to test the XMLRPC access locally to make sure its working, I ran the curl command to shutdown my opensim service on port 9000 but any Console command can be replaced with a new one in the value tag for active command. 
  ```
 curl --header "Content-Type: application/xml" \
   --request POST \
