@@ -798,7 +798,11 @@ or
 service opensim stop
 ```
 
-**Example OpenSim CURL command to call XMLRPC**
+***
+
+## **Example OpenSim CURL command to call XMLRPC**
+
+***
 
  Not required but good to test the XMLRPC access locally to make sure its working, I ran the curl command to shutdown my opensim service on port 9000 but any Console command can be replaced with a new one in the value tag for active command. 
  ```
