@@ -804,6 +804,92 @@ service opensim stop
 
 ***
 
+## **Wordpress Database,Theme Setup**
+
+***
+The section below is still tentative and will be refined as more revisions are made, but does work. Although, is more stumbling and learning than showing how to set up Opensim.
+***
+
+Now we will get back to the Wordpress install for managing, creating users within Opensim and organizing avatars. We will need to setup the database before doing anything else. The database needs to be seprate from the Opensim database, but also is not a complex setup, Wordpress install will do that automaticaly when doing the setup for the first time. If you have a hosting company and using a control panel you will need to setup the database and user through it, if cPanel use the following command as root.
+```
+uapi --output=jsonpretty \
+  --user=dyount \
+  Mysql \
+  create_user \
+  name='dyount_osimwp' \
+  password='12345ismypassword'
+
+uapi  --user=dyount Mysql create_database name=dyount_osimwp
+
+uapi --user=dyount Mysql set_privileges_on_database user=dyount_osimwp database=dyount_osimwp privileges=ALL
+```
+
+If not using any control panel then use the below commands as root to do it manually.
+```
+mysql 
+create database dyount_osimwp
+CREATE USER 'dyount_osimwp'@'localhost' IDENTIFIED BY 'pa$sW0rd';
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on dyount_osimwp.* TO 'dyount_osimwp'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
+That's it for setting up the mysql database for Wordpress to install to. Now we will as user use the wp-cli for install and create the default wp-config.php file.
+```
+wp config create --dbname=dyount_osimwp --dbuser=dyount_osimwp --dbpass=12345notmypassword --locale=en_US
+Success: Generated 'wp-config.php' file.
+```
+
+Now in the browser you will go to the sites url and select language and then click continue.
+```
+http://opensim.spotcheckit.org/wordpress/
+```
+
+Enter Info to setup the default wordpress theme.
+```
+Site Title "Spotty Grid"
+Username "dyount"
+Password "AreAllygoodpa$Ssw0rd!"
+Your Email "factorf2@yahoo.com"
+```
+
+Then click the "Install Wordpress" button. You should then see Success! You should be able to login into the backend as admin now to check it out, but keep the commandline ready as we will continue with it.  
+```
+http://opensim.spotcheckit.org/wordpress/wp-admin
+```
+
+Still as user from the comandline you can search for themes, while the default theme is okay,we have many generes and styles to pick from and a good one to act as an opensim interface for the welcome,about,help and profile page will be the free theme "justread". first check if its avialable to you. 
+```
+wp theme search justread
+
+Success: Showing 1 of 1 themes.
++----------+----------+--------+
+| name     | slug     | rating |
++----------+----------+--------+
+| Justread | justread | 100    |
++----------+----------+--------+
+```
+
+Now we can install this theme from commandline. 
+```
+wp theme install justread
+
+Installing Justread (1.3.0)
+Downloading installation package from https://downloads.wordpress.org/theme/justread.1.3.0.zip...
+Unpacking the package...
+Installing the theme...
+Theme installed successfully.
+Success: Installed 1 of 1 themes.
+```
+
+Now that the theme that will be working with Opensim it installed we need to enable it to see it. 
+```
+wp theme activate justread
+
+Success: Switched to 'Justread' theme.
+```
+
+
+
 ## **Example OpenSim CURL command to call XMLRPC**
 
 ***
