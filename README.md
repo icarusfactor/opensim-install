@@ -888,6 +888,7 @@ wp theme activate justread
 Success: Switched to 'Justread' theme.
 ```
 
+**TUROTIAL STILL IN PROGRESS MORE UPDATES TO COME**
 
 
 ## **Example OpenSim CURL command to call XMLRPC**
