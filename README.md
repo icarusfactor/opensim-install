@@ -1147,6 +1147,9 @@ wp menu item add-custom menu-1 "About" https://opensim.spotcheckit.org/wordpress
 Success: Menu item added.
 ```
 
+Now that we have a base framework made with Wordpress for avatar & user setup with direct interface to Opensim working, our next step is to start building out the virtual regions that we will build our educational infrastructure onto for classrooms that teacher and students will be able to study with easy by using the streaming and virtual media resources that will create a Massivley Online Open Courses also known as MOOC.
+
+ Not done yet, so many more exciting steps to come. 
 
 ***
 
@@ -1176,4 +1179,4 @@ curl --header "Content-Type: application/xml" \
         </param>
         </params>
 </methodCall>" http://opensim.spotcheckit.org:9000
-``` 
+```
