@@ -58,12 +58,13 @@
 
 *Start and Stop Opensim with Systemd:*
 
-*Wordpress Database,Theme Setup (TBA)*
+*Wordpress Database,Theme Setup:*
 
-*Wordpress Opensim User/Avatar Plugin Setup (TBA)*
+*Wordpress Opensim User/Avatar Plugin Setup:*
+
+*Wordpress Customizing Theme & Welcome Page Setup:*
 
 *Example CURL Opensim command to call XMLRPC:*
-
 
 ***
 
@@ -302,12 +303,10 @@ There doesn't seem to be a wp-config.php file. It is needed before the installat
 
 **w4os – OpenSimulator Web Interface Plugin :**
 
-In the current state, without being connected to Wordpress's database we wont be able to install any plugins, unless we do it manually. So lets do so.
+In the current state, without being connected to Wordpress's database we wont be able to install any plugins, unless we do it manually. So lets do so. This is in an unstable status so it is good to keep it updated often. If a good stable point take place , I will fork it and make a static one at least until the core one become stable. 
 ```
 cd wp-content/plugins/
-wget https://downloads.wordpress.org/plugin/w4os-opensimulator-web-interface.2.3.10.zip
-unzip w4os-opensimulator-web-interface.2.3.10.zip
-rm w4os-opensimulator-web-interface.2.3.10.zip
+git clone https://github.com/GuduleLapointe/w4os.git
 ```
 
 Now when we setup the empty database for Wordpress and step through the browser based installation which will be done later in this tutorial the plugin will be ready to activate and configure and use.   
@@ -804,13 +803,13 @@ service opensim stop
 
 ***
 
-## **Wordpress Database,Theme Setup**
+## **Wordpress Database,Config & Theme Setup**
 
 ***
 The section below is still tentative and will be refined as more revisions are made, but does work. Although, is more stumbling and learning than showing how to set up Opensim.
 ***
 
-Now we will get back to the Wordpress install for managing, creating users within Opensim and organizing avatars. We will need to setup the database before doing anything else. The database needs to be seprate from the Opensim database, but also is not a complex setup, Wordpress install will do that automaticaly when doing the setup for the first time. If you have a hosting company and using a control panel you will need to setup the database and user through it, if cPanel use the following command as root.
+Getting back to the Wordpress install for managing and creating users within Opensim and organizing avatars. We will need to setup the database before doing anything else. This database needs to be seperate from the Opensim database, but also is not a complex setup, Wordpress install will do that automaticaly when doing the setup for the first time. If you have a hosting company and using a control panel you will need to setup the database and user through it, if cPanel use the following command as root.
 ```
 uapi --output=jsonpretty \
   --user=dyount \
@@ -835,6 +834,7 @@ FLUSH PRIVILEGES;
 
 That's it for setting up the mysql database for Wordpress to install to. Now we will as user use the wp-cli for install and create the default wp-config.php file.
 ```
+cd BASEDIR/wordpress
 wp config create --dbname=dyount_osimwp --dbuser=dyount_osimwp --dbpass=12345notmypassword --locale=en_US
 Success: Generated 'wp-config.php' file.
 ```
@@ -844,7 +844,7 @@ Now in the browser you will go to the sites url and select language and then cli
 http://opensim.spotcheckit.org/wordpress/
 ```
 
-Enter Info to setup the default wordpress theme.
+Enter your info to setup the default wordpress theme.
 ```
 Site Title "Spotty Grid"
 Username "dyount"
@@ -881,15 +881,274 @@ Theme installed successfully.
 Success: Installed 1 of 1 themes.
 ```
 
-Now that the theme that will be working with Opensim it installed we need to enable it to see it. 
+Now that the theme that we will be working with in Opensim is installed we now need to enable it, to see it. 
 ```
 wp theme activate justread
 
 Success: Switched to 'Justread' theme.
 ```
 
-**TUROTIAL STILL IN PROGRESS MORE UPDATES TO COME**
+***
 
+## **Wordpress User Opensim Avatar Plugin Setup**
+
+***
+
+Now that we have Wordpress setup and ready for the OpenSim plugin to be setup, click on the the "Plugins" option on left hand side of the Wordpress dashboard and you should see the Opensim Wordpress plugin in a disabled stated. Click "activate" on the  w4os plugin section.
+
+After clicking it you should see a notification bar pop up in the top section of Wordpress dashboard that says "ROBUST database is not configured. To finish configuration, go to OpenSimulator settings page". Click the link in notice to finish setting it up.
+
+You will fill out the form data with below info matching your setup.
+```
+Grid info
+Login URI http://69.167.171.208:9000
+Grid name Spotty Grid
+
+Robust server database
+Hostname opensim.spotcheckit.org
+Database name dyount_osimwp
+Username dyount_osimwp
+Password  12345thisIsnotmypaSsword
+
+Profile page Defaults
+Check Show configuration instructions to new users.
+Login page Default
+
+Exclude from stats  Models / Accounts without mail address / Hypergrid visitors
+```
+Then click the "Save Changes" button. After doing this a red notification will pop up that says "Missing tables: Presence. The ROBUST database is connected, but some required tables are missing. OpenSimulator settings page".
+
+To fix this we will need to edit the "Standalone.ini" file and comment out the Null library and replace it with the MySQL one. 
+```
+vim /home/dyount/opensim.spotcheckit.org/opensim/bin/config-include/Standalone.ini
+[PresenceService]
+    LocalServiceModule = "OpenSim.Services.PresenceService.dll:PresenceService"
+    ;StorageProvider = "OpenSim.Data.Null.dll"
+    StorageProvider = "OpenSim.Data.MySQL.dll"
+```
+
+Now if you click on the Opensim icon in the left hand menu and then status you should see some basic infomration. Scroll down to bottom section OpenSimulator pages, here it will check for active links to Opensim services and connections to it. What should be checked at this point is.
+
+* Check pages now  - You can click this to get the latest stats. Looks to be connected to Wordpress cron service, so it will update automatically after a certian period has past. 
+
+* Avatar profile - While is checked ,currently it is broken if you check this link. But is set to use default instead of link in settings for the profiles, so it wont error out. 
+
+To get the Wordpress "Avatar profiles" option to work, as it will fail if not set to "true" in Opensim configuration "StandaloneCommon.ini" file, change the following line from "false" to "true".
+```
+[UserProfilesService]
+    ;; To use, set Enabled to true then configure for your site...
+    Enabled = true
+```
+
+Since we made changes to Opensim service we will need to restart it. 
+```
+service opensim stop
+service opensim start
+```
+
+
+* Splash - While this option was setup earlier in this tutorial with only basic HTML, now that we have our CMS ready, we can now comment out that link and chang eit to the one of the Wordpress pages. 
+
+```
+vim /home/dyount/opensim.spotcheckit.org/opensim/bin/config-include/StandaloneCommon.ini
+;welcome = ${Const|BaseURL}/welcome
+welcome = http://opensim.spotcheckit.org/wordpress/welcome
+```
+
+We can now remove the welcome directory we created as a test page for the inital page that pops up when logging into the grid. 
+```
+rm -rf BASEDIR/welcome
+```
+
+* Registration page - While not checked , we will now setup the registration as well. Cut and paste the link from the grey helper box. 
+
+```
+;register = ${Const|BaseURL}/register
+register = http://opensim.spotcheckit.org/wordpress/wp-login.php?action=register
+```
+
+* Password recovery - Also not checked, we will now setup the Lost Password link as well. cut and paste from the grey helper box. 
+
+Within the same file search for below line and paste in the line below it matching your domain.
+```
+; password help: optional: page providing password assistance for users of your grid
+;password = ${Const|BaseURL}/password
+password = http://opensim.spotcheckit.org/wordpress/wp-login.php?action=lostpassword
+```
+
+To activate in Opensim these links we will need to restart the Opensim service. But before we do, I will note the "About" and "Help" links can be activated by adding any page as well and linked to a Wordpress page once you make them. 
+```
+service opensim stop
+service opensim start
+```
+
+If you refresh and check the pages now it should show check marks in front of "Registration page" and "Password revovery". Since we have enabled Offline Messaging Service in Opensim we can set it up to a degree and make it available here. To do so, click Helpers option page. Scroll down to "Offline messages" section. We will cut and paste the "GridInfoService" section and paste in in the setion of the file of the same section.
+```
+[GridInfoService]
+; Added for w4os
+message = http://opensim.spotcheckit.org/wordpress/helpers/offline/
+```
+
+Open the main ini file and cut and paste section into it.
+vim /home/dyount/opensim.spotcheckit.org/opensim/bin/OpenSim.ini
+```
+ ; OfflineMessageURL = ${Const|PrivURL}:${Const|PrivatePort}
+OfflineMessageURL = http://opensim.spotcheckit.org/wordpress/helpers/offline/
+```
+
+Since we made changes to Opensim service we will need to restart it before the change will become active. 
+```
+service opensim stop
+service opensim start
+```
+
+Offline messages should now show as an "!" mark. To set this up further an extra helper script needs to be added to connect to WP mail. Will leave this as is for now and may set this up at some point int the future as it is a nice option for the web site. But just to make aware of its an option at this time. 
+https://github.com/GuduleLapointe/flexible_helper_scripts
+
+***
+
+## **Wordpress Customizing Theme & Welcome Page Setup:**
+
+***
+
+Using a browser, go to the url http://opensim.spotcheckit.org/wordpress/ and it should have at least two options, "Avatar Profile" installed by w4os plugin and "Sample Page" installed by the Justread theme. 
+
+What we want to make is a custom Welcome page and then we will swap the raw HTML one we had with the Wordpress one. We now will replace the default page in Wordpress as it just shows the recent posts in blocks with our own custom page to have the basic site login options for new or returning users to get access to the sites Avatar functions. 
+```
+ wp post create --post_type=page --post_title="Welcome" 
+ 
+ Success: Created post 116.
+```
+
+We have to install the importer plugin so we can then install the premade example site pages. 
+```
+wp plugin install wordpress-importer --activate
+
+Installing WordPress Importer (0.8)
+Downloading installation package from https://downloads.wordpress.org/plugin/wordpress-importer.0.8.zip...
+Unpacking the package...
+Installing the plugin...
+Plugin installed successfully.
+Activating 'wordpress-importer'...
+Plugin 'wordpress-importer' activated.
+Success: Installed 1 of 1 plugins.
+```
+
+To limit access for users who have logged for some menu items, we will add the "User Menu" plugin. 
+```
+wp plugin install user-menus
+
+Installing User Menus – Nav Menu Visibility (1.3.1)
+Downloading installation package from https://downloads.wordpress.org/plugin/user-menus.1.3.1.zip...
+Unpacking the package...
+Installing the plugin...
+Plugin installed successfully.
+Success: Installed 1 of 1 plugins.
+
+wp plugin activate user-menus
+
+Plugin 'user-menus' activated.
+Success: Activated 1 of 1 plugins.
+```
+
+ We need to get rid of the "Sample page" so it does not clutter or show up in the menu.
+We will need to find the ID of the page and then we can remove the theme Sample page. 
+```
+ wp post list --post_type=page
++-----+----------------+----------------+---------------------+-------------+
+| ID  | post_title     | post_name      | post_date           | post_status |
++-----+----------------+----------------+---------------------+-------------+
+| 2   | Sample Page    | sample-page    | 2022-11-03 16:30:53 | publish     |
++-----+----------------+----------------+---------------------+-------------+
+
+wp post delete 2 --force 
+Success: Deleted post 2.
+```
+
+With the Sample page deleted lets download and import the default template pages Welcome, Help, About and Grid.
+```
+wget https://raw.githubusercontent.com/icarusfactor/opensim-install/main/wordpress.welcome.xml
+
+wget https://raw.githubusercontent.com/icarusfactor/opensim-install/main/wordpress.grid.xml
+
+wget https://raw.githubusercontent.com/icarusfactor/opensim-install/main/wordpress.help.xml
+
+wget https://raw.githubusercontent.com/icarusfactor/opensim-install/main/wordpress.about.xml
+
+wp import wordpress.welcome.xml --authors=create
+
+wp import wordpress.grid.xml --authors=create
+
+wp import wordpress.help.xml --authors=create
+
+wp import wordpress.about.xml --authors=create
+```
+
+After import of the examples Welcome,Grid,Help and About. We need to edit and link domain and make the default page Welcome. 
+```
+wp post list --post_type='page' --allow-root
+
++-----+----------------+----------------+---------------------+-------------+
+| ID  | post_title     | post_name      | post_date           | post_status |
++-----+----------------+----------------+---------------------+-------------+
+| 269 | Welcome        | welcome        | 2022-11-05 11:18:29 | publish     |
+| 381 | Help           | help           | 2022-11-05 11:18:29 | publish     |
+| 387 | Grid           | grid           | 2022-11-05 11:18:29 | publish     |
+| 389 | About          | about          | 2022-11-05 11:18:29 | publish     |
+| 5   | Avatar profile | profile        | 2022-11-03 19:13:14 | publish     |
+| 3   | Privacy Policy | privacy-policy | 2022-11-03 16:30:53 | draft       |
++-----+----------------+----------------+---------------------+-------------+
+
+wp option update page_on_front 269
+
+Success: Updated 'page_on_front' option.
+
+wp option update show_on_front page
+
+Success: Updated 'show_on_front' option.
+```
+
+We dont need the Welcome menu item in the list and need it removed since its now the home link of the domain. 
+```
+wp menu list
+
++---------+--------+--------+-----------+-------+
+| term_id | name   | slug   | locations | count |
++---------+--------+--------+-----------+-------+
+| 7       | Menu 1 | menu-1 | menu-1    | 3     |
++---------+--------+--------+-----------+-------+
+
+wp menu item list 7 
+
++-------+-----------+---------+--------------------------------------------+----------+
+| db_id | type      | title   | link                                       | position |
++-------+-----------+---------+--------------------------------------------+----------+
+| 367   | custom    | Home    | https://opensim.spotcheckit.org/wordpress/ | 1        |
+| 370   | post_type | Welcome | http://opensim.spotcheckit.org/wordpress/  | 3        |
++-------+-----------+---------+--------------------------------------------+----------+
+
+wp menu item delete 370 
+
+Success: Deleted 1 of 1 menu items.
+```
+
+Lets add menu links to the newly imported pages Help,Grid and About items. 
+```
+wp menu item add-custom menu-1 "Grid" https://opensim.spotcheckit.org/wordpress/grid/
+
+Success: Menu item added.
+
+wp menu item add-custom menu-1 "Help" https://opensim.spotcheckit.org/wordpress/help/
+
+Success: Menu item added.
+
+wp menu item add-custom menu-1 "About" https://opensim.spotcheckit.org/wordpress/about/
+
+Success: Menu item added.
+```
+
+
+***
 
 ## **Example OpenSim CURL command to call XMLRPC**
 
