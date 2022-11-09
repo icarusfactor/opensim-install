@@ -64,7 +64,7 @@
 
 *Wordpress Customizing Theme & Welcome Page Setup:*
 
-*Wordpres Email Plugin Setup:*
+*Wordpress Email Plugin Setup:*
 
 *OSSL Overview:*
 
@@ -1161,7 +1161,7 @@ Now that we have a base framework made with Wordpress for avatar & user setup wi
 
 ***
 
-## **Wordpres Email Plugin Setup:**
+## **Wordpress Email Plugin Setup:**
 
 ***
 
@@ -1237,4 +1237,4 @@ curl --header "Content-Type: application/xml" \
         </param>
         </params>
 </methodCall>" http://opensim.spotcheckit.org:9000
-``` 
+```
