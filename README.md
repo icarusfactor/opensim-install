@@ -64,7 +64,12 @@
 
 *Wordpress Customizing Theme & Welcome Page Setup:*
 
+*Wordpres Email Plugin Setup:*
+
+*OSSL Overview:*
+
 *Example CURL Opensim command to call XMLRPC:*
+
 
 ***
 
@@ -913,8 +918,6 @@ Password  12345thisIsnotmypaSsword
 Profile page Defaults
 Check Show configuration instructions to new users.
 Login page Default
-
-Exclude from stats  Models / Accounts without mail address / Hypergrid visitors
 ```
 Then click the "Save Changes" button. After doing this a red notification will pop up that says "Missing tables: Presence. The ROBUST database is connected, but some required tables are missing. OpenSimulator settings page".
 
@@ -1155,6 +1158,57 @@ Now that we have a base framework made with Wordpress for avatar & user setup wi
 
  Not done yet, so many more exciting steps to come. 
 
+
+***
+
+## **Wordpres Email Plugin Setup:**
+
+***
+
+For the Wordpress email setup we will install and activate the WP Mail Plugin. Nothing out of the ordinary as this is the common connector for email service for Wordpress beyond the default php mailer and with all the email security requierments is more and more outdataded method of transport.
+```
+wp plugin install wp-mail-smtp --activate
+
+Installing WP Mail SMTP by WPForms – The Most Popular SMTP and Email Log Plugin (3.6.1)
+Downloading installation package from https://downloads.wordpress.org/plugin/wp-mail-smtp.3.6.1.zip...
+Unpacking the package...
+Installing the plugin...
+Plugin installed successfully.
+Activating 'wp-mail-smtp'...
+Plugin 'wp-mail-smtp' activated.
+Success: Installed 1 of 1 plugins.
+```
+
+We will be setting up and using our servers email transport system with account authentification and as for the no-reply email to work, this will have to be setup and activated on this server which is beyond the scope of this tutorial, but will assume this is setup. 
+
+Below are the settings that we will use for the plugins settings screen.
+```
+From Email [no-reply@spotcheckit.org]
+[x] Force From Email
+From Name [Spotty Grid]
+Return Path [x] Set the return-path to match the From Email
+Mailer [x] Other SMTP
+SMTP Host spotcheckit.org
+Encryption [x] TLS
+SMTP Port [587]
+Authentication [x] ON
+SMTP Username [no-reply@spotcheckit.org]
+SMTP Password [N0tMyPa$sw0Rd]
+Click "Save Settings" button.
+```
+
+As a test you can select "Email Test" from top menu and enter a send to address and click "Send Email"
+
+
+***
+
+## **OSSL Overview**
+
+***
+
+Just to touch on the huge advantage that Opensim has over Second Life is its extended set of powerful scripting language functions to increase many capabilites and most of these functions are enabled by default from the osslDefaultEnable.ini in the configuration directory,an example is that a script or action can take place across multiple regions, so its actually a megaregion made up of all connected regions and only limited as set in config by estate owner of each region.   
+
+
 ***
 
 ## **Example OpenSim CURL command to call XMLRPC**
@@ -1183,4 +1237,4 @@ curl --header "Content-Type: application/xml" \
         </param>
         </params>
 </methodCall>" http://opensim.spotcheckit.org:9000
-```
+``` 
