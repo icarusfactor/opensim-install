@@ -1075,6 +1075,8 @@ wget https://raw.githubusercontent.com/icarusfactor/opensim-install/main/wordpre
 
 wget https://raw.githubusercontent.com/icarusfactor/opensim-install/main/wordpress.about.xml
 
+wget https://raw.githubusercontent.com/icarusfactor/opensim-install/main/wordpress.custom_css.xml
+
 wp import wordpress.welcome.xml --authors=create
 
 wp import wordpress.grid.xml --authors=create
@@ -1082,6 +1084,8 @@ wp import wordpress.grid.xml --authors=create
 wp import wordpress.help.xml --authors=create
 
 wp import wordpress.about.xml --authors=create
+
+wp import wordpress.custom_css.xml --authors=create
 ```
 
 After import of the examples Welcome,Grid,Help and About. We need to edit and link domain and make the default page Welcome. 
